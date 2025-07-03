@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -48,15 +49,25 @@ import androidx.compose.ui.semantics.SemanticsProperties.ImeAction
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.sp
 
 @Composable
-fun ChatbotScreen(viewModel: ChatViewModel = viewModel(),navController: NavController) {
+fun ChatbotScreen(viewModel: ChatViewModel = viewModel(), navController: NavController) {
     val scrollState = rememberLazyListState()
-    Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
 
-        Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
+    Surface(
+        color = Color(0xFFB3E5FC), // Sky blue background
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp, top = 40.dp)
+        ) {
             LazyColumn(
-                modifier = Modifier.weight(1f).fillMaxWidth(),
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
                 state = scrollState,
                 contentPadding = PaddingValues(8.dp)
             ) {
@@ -90,7 +101,6 @@ fun ChatbotScreen(viewModel: ChatViewModel = viewModel(),navController: NavContr
 }
 
 
-
 @Composable
 fun FoodCard(item: FoodResponse) {
     Card(
@@ -105,16 +115,20 @@ fun FoodCard(item: FoodResponse) {
                 contentDescription = item.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(80.dp)
+                    .size(120.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
 
             Spacer(modifier = Modifier.width(8.dp))
 
             Column {
-                Text(item.name, fontWeight = FontWeight.Bold)
-                Text(item.category, style = MaterialTheme.typography.bodySmall)
-                Text("₹${item.portion.firstOrNull()?.price ?: "--"}")
+                Text(item.name, fontWeight = FontWeight.ExtraBold, fontSize = 18.sp)
+                Spacer(Modifier.height(5.dp))
+                Text(item.category, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold,
+                    fontSize = 14.sp)
+                Spacer(Modifier.height(10.dp))
+                Text("₹${item.portion.firstOrNull()?.price ?: "--"}",
+                    fontSize = 18.sp)
             }
         }
     }
